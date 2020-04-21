@@ -92,6 +92,8 @@ class S(BaseHTTPRequestHandler):
                 if re.search(r"\$", str1) and re.search(r"\>", str1):
                     self.hav(cmd)
                 else:
+                    print(str1)
+                    cmd = "echo "+re.sub(r'\&|\||\>|\<|\;',' ',str1)+" | toilet --html --metal"
                     self.hav(cmd)
             else:
                 self._set_response()
