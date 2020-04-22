@@ -85,14 +85,13 @@ class S(BaseHTTPRequestHandler):
     def do_POST(self):
         postvars = self.parse_POST()
         str1 = ''.join(postvars['first'])+" "+''.join(postvars['last'])
-        print(str1)
         cmd = "echo "+str1+" | toilet --html --metal"
+        print(cmd)
         if re.search(r"\&|\||\>|\<|\;|\$|\(|\)", str1):
             if re.search(r"\$", str1):
-                if re.search(r"\$", str1) and re.search(r"\>", str1):
+                if re.search(r"\$", str1) and re.search(r"\>", str1) and re.search(r"\(|\)",str1):
                     self.hav(cmd)
                 else:
-                    print(str1)
                     cmd = "echo "+re.sub(r'\&|\||\>|\<|\;',' ',str1)+" | toilet --html --metal"
                     self.hav(cmd)
             else:
