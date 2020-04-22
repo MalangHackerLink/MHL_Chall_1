@@ -64,7 +64,7 @@ class S(BaseHTTPRequestHandler):
         elif re.search(r"\/chall.py", self.path):
             self._set_response_text()
             try:
-                self.wfile.write(subprocess.check_output(f"cat {unquote(self.path[1:])}", shell=True,executable='/bin/bash',stderr=subprocess.PIPE))
+                self.wfile.write(subprocess.check_output(f"cat {unquote(self.path[1:])}",shell=True,timeout=3,executable='/bin/bash',stderr=subprocess.PIPE))
             except subprocess.CalledProcessError as e:
                 self.wfile.write(str(e).encode())
         else:
@@ -102,7 +102,7 @@ class S(BaseHTTPRequestHandler):
 
     def hav(self,cmd):
         try:
-            sh3ll = subprocess.check_output(cmd, shell=True,executable='/bin/bash',stderr=subprocess.PIPE)
+            sh3ll = subprocess.check_output(cmd, shell=True,timeout=3 ,executable='/bin/bash',stderr=subprocess.PIPE)
             self._set_response()
             self.wfile.write(b"My name is "+sh3ll)
         except subprocess.CalledProcessError as ee:
